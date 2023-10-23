@@ -1,0 +1,48 @@
+bool checkString(char * s){
+    int done = 0;
+    for( int i = 0 ; i < strlen(s) ; i++)
+    {
+        if(s[i] == 'b')
+            done = 1;
+        if(done && s[i] == 'a')
+            return 0;
+    }
+    return 1;
+}
+
+
+------------------------------------------------------------
+
+
+bool checkString(char * s){
+    for( int i = 0 ; i < (strlen(s) - 1) ; i++)
+        if(s[i] == 'b' && s[i+1] == 'a')
+            return 0;
+    return 1;
+}
+
+
+------------------------------------------------------------
+
+
+bool checkSubstring(char *s, bool foundB) 
+{
+    // In an empty string, all a's appear before all b's.
+    if (strlen(s) == 0)
+        return 1;
+
+    // If the substring starts with an a, it's invalid,
+    // if there already was a b found.
+    if (s[0] == 'a' && foundB) 
+        return 0;
+
+    // Otherwise check the rest of the substring, passing
+    // in, whether a b was found at this substring's head.
+    return checkSubstring(&(s[1]), foundB || s[0] == 'b');
+}
+
+bool checkString(char *s) {
+    // Check the entire string as a substring, not having
+    // found any b's yet, as no letter was checked yet.
+    return checkSubstring(s, 0);
+}
